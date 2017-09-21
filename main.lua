@@ -48,7 +48,7 @@ end
 function love.draw()
 	rend:draw()
 	
-	-- status --
+	--[[ status --
 	
 	local bg = {50, 50, 50}
 	if not system.playing then bg = {100, 50, 50} end
@@ -67,14 +67,6 @@ function love.draw()
 		' (%03.1e, %03.1e)\t×%.2e zoom \n time ×%.2e \n %d° at %d%% thrust',
 		rend.camera[1], rend.camera[2], rend.zoom, system.timescale,
 		rotation, thrust), 20, 0)
-	
-	--[[ thrust vector --
-	
-	local g = 2.55 * thrust
-	love.graphics.setColor{255,g/2,g}
-	local c = rend:visCoord(rocket.pos)
-	local d = c + thrustvector
-	love.graphics.line(c[1], c[2], d[1], d[2])
 	
 	-- ]]--
 end
