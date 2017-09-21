@@ -26,6 +26,8 @@ yizzy.render = yizzy.core.class{
 		paths = {},
 		timer = 0,
 		
+		gravField = {},
+		
 		--
 		recordPath = true,
 		recordEvery = 0.1,
@@ -73,7 +75,33 @@ yizzy.render = yizzy.core.class{
 		end
 	end,
 	
-	logPath = function(self, dt)
+	getField = function(self, force, precision)
+		local width, height = love.graphics.getDimensions()
+		local square = V{precision, precision}
+		
+		local grid = {precision=precision, force=force}
+		
+		for x = 0, width / precision do
+			local line = {}
+			
+			for y = 0, height / precision do
+				local a = V{x, y} * precision
+				local center = self:absCoord(a + square / 2)
+				
+				local intensity = force(self.system, center):value()
+				table.insert(line, intensity)
+			end
+			table.insert(grid, line)
+		end
+		
+		return grid
+	end,
+	
+	---------
+	-- log --
+	---------
+	
+	log = function(self, dt)
 		dt = dt * self.system.timescale
 		self.timer = self.timer + dt
 		if self.timer > self.recordEvery then
@@ -81,12 +109,20 @@ yizzy.render = yizzy.core.class{
 		else
 			return
 		end
-		
+		self:logPath()
+		self:logGravityField()
+	end,
+	
+	logPath = function(self)
 		local snap = {}
 		for name, body in pairs(self.system.bodies) do
 			snap[name] = yizzy.core.copy(body.pos)
 		end
 		table.insert(self.paths, snap)
+	end,
+	
+	logGravityField = function(self)
+		self.gravField = self:getField(self.system.gravityFieldStrength, self.fieldPrecision)
 	end,
 	
 	------------
@@ -99,7 +135,7 @@ yizzy.render = yizzy.core.class{
 		end
 		local bg = self.background
 		if bg == 'gravity' then
-			self:drawField(yizzy.physics.System.gravityFieldStrength)
+			self:drawGravField()
 		elseif bg == 'grid' then
 			self:drawGrid()
 		end
@@ -119,20 +155,15 @@ yizzy.render = yizzy.core.class{
 		end
 	end,
 
-	drawField = function(self, func)
-		local width, height = love.graphics.getDimensions()
-		local pr = self.fieldPrecision
+	drawGravField = function(self)
+		local pr = self.gravField.precision
 		local square = V{pr, pr}
-		
-		for x = 0, width / pr do
-			for y = 0, height / pr do
-				local a = V{x, y} * pr
-				local b = a + square
-				local center = self:absCoord(a + square / 2)
-				
-				local s = func(self.system, center):value() * 10
-				love.graphics.setColor{s, s, s}
-				
+		for x, line in ipairs(self.gravField) do
+			for y, intensity in ipairs(line) do
+				local b = V{x, y} * pr
+				local a = b - square
+				local i = intensity * 10
+				love.graphics.setColor{i,i,i}
 				love.graphics.rectangle('fill', a[1], a[2], b[1], b[2])
 			end
 		end
@@ -172,7 +203,7 @@ yizzy.render = yizzy.core.class{
 		end
 		
 		love.graphics.setLineWidth(1)
-		love.graphics.setColor{50,50,50}
+		love.graphics.setColor{self.gridGray, self.gridGray, self.gridGray}
 		
 		local x = center[1] % large % width
 		while x < width do
@@ -200,7 +231,7 @@ yizzy.render = yizzy.core.class{
 		b = self:visCoord(b)
 		
 		love.graphics.setLineWidth(1)
-		love.graphics.setColor{self.gridGray, self.gridGray, self.gridGray}
+		love.graphics.setColor{50,50,50}
 		love.graphics.line(a[1], a[2], b[1], b[2])
 		
 		-- center to label
