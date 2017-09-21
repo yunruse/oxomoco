@@ -37,7 +37,7 @@ function love.update(dt)
 		system:update(dt, function()
 			s.acc = s.acc + thrustvector
 		end)
-		rend:logPath(dt)
+		rend:log(dt)
 	end
 end
 
@@ -101,10 +101,12 @@ function love.keypressed(key)
 	
 	elseif key == 'space' then
 		system.playing = not system.playing
-	elseif key == 'f11' then
-		love.window.setFullscreen(not love.window.getFullscreen())
+	elseif key == 'f2' then
+		rend:logGravityField()
 	elseif key == 'f5' then
 		love:load()
+	elseif key == 'f11' then
+		love.window.setFullscreen(not love.window.getFullscreen())
 	elseif key == 'left' then
 		rotation = rotation - 10
 	elseif key == 'right' then
