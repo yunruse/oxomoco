@@ -32,8 +32,8 @@ yizzy.render = yizzy.core.class{
 		
 		-- background
 		background = 'none',
-		-- 'grid'
-		gridWidth = 100,
+		
+		gridGray = 63,
 		-- all fields ('gravity')
 		fieldPrecision = 10,
 		
@@ -147,17 +147,17 @@ yizzy.render = yizzy.core.class{
 		end
 		center = self:visCoord(center)
 		
-		local g = self.gridWidth * self.zoom
+		local g = 100 * self.zoom
 		local zoominess = math.log10(self.zoom)
 		local step = -math.floor(zoominess)
 		local large = g * 10 ^ (step)
-		local small = g * 10 ^ (step - 1)
+		local small = large / 10
 		
 		local fade = zoominess % 1
 		
 		
 		love.graphics.setLineWidth(0.5 + 0.5 * fade)
-		local c = 50 * fade
+		local c = self.gridGray * fade
 		love.graphics.setColor{c,c,c}
 		
 		local x = center[1] % small % width
@@ -200,7 +200,7 @@ yizzy.render = yizzy.core.class{
 		b = self:visCoord(b)
 		
 		love.graphics.setLineWidth(1)
-		love.graphics.setColor{50,50,50}
+		love.graphics.setColor{self.gridGray, self.gridGray, self.gridGray}
 		love.graphics.line(a[1], a[2], b[1], b[2])
 		
 		-- center to label
