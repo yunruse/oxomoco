@@ -25,6 +25,7 @@ yizzy.render = yizzy.core.class{
 		zoom = 1,
 		paths = {},
 		timer = 0,
+		stepTimer = 0,
 		
 		gravField = {},
 		
@@ -88,7 +89,7 @@ yizzy.render = yizzy.core.class{
 				local a = V{x, y} * precision
 				local center = self:absCoord(a + square / 2)
 				
-				local intensity = force(self.system, center):value()
+				local intensity = self.system:fieldStrength(center, force):value()
 				table.insert(line, intensity)
 			end
 			table.insert(grid, line)
@@ -104,8 +105,10 @@ yizzy.render = yizzy.core.class{
 	log = function(self, dt)
 		dt = dt * self.system.timescale
 		self.timer = self.timer + dt
-		if self.timer > self.recordEvery then
-			self.timer = self.timer - self.recordEvery
+		
+		self.stepTimer = self.stepTimer + dt
+		if self.stepTimer > self.recordEvery then
+			self.stepTimer = self.stepTimer - self.recordEvery
 		else
 			return
 		end
@@ -122,7 +125,7 @@ yizzy.render = yizzy.core.class{
 	end,
 	
 	logGravityField = function(self)
-		self.gravField = self:getField(self.system.gravityFieldStrength, self.fieldPrecision)
+		self.field = self:getField(self.background, self.fieldPrecision)
 	end,
 	
 	------------
@@ -134,10 +137,10 @@ yizzy.render = yizzy.core.class{
 			self.camera = self.bodyCamera.pos
 		end
 		local bg = self.background
-		if bg == 'gravity' then
-			self:drawGravField()
-		elseif bg == 'grid' then
+		if bg == 'grid' then
 			self:drawGrid()
+		else
+			self:drawField()
 		end
 		
 		if self.showConnections then
@@ -155,10 +158,10 @@ yizzy.render = yizzy.core.class{
 		end
 	end,
 
-	drawGravField = function(self)
-		local pr = self.gravField.precision
+	drawField = function(self)
+		local pr = self.field.precision
 		local square = V{pr, pr}
-		for x, line in ipairs(self.gravField) do
+		for x, line in ipairs(self.field) do
 			for y, intensity in ipairs(line) do
 				local b = V{x, y} * pr
 				local a = b - square
@@ -247,17 +250,23 @@ yizzy.render = yizzy.core.class{
 		local visPath = {}
 		for i, snap in ipairs(self.paths) do
 			local pos = snap[body.name]
+			if not pos then goto continue end
+			
 			if self.baseCamera then
 				pos = self.baseCamera.pos + pos - snap[self.baseCamera.name]
 			end
 			local vis = self.visCoord(self, pos)
 			table.insert(visPath, vis[1])
 			table.insert(visPath, vis[2])
+			
+			::continue::
 		end
 		
 		love.graphics.setColor(body.color)
 		love.graphics.setLineWidth(1)
-		love.graphics.line(visPath)
+		if #visPath > 2 then
+			love.graphics.line(visPath)
+		end
 	end,
 	
 	drawBody = function(self, body)

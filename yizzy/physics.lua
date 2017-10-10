@@ -29,9 +29,16 @@ yizzy.physics.Body = yizzy.core.class{
 
 yizzy.physics.G = 6.67408
 
-yizzy.physics.gravityForce = function(self, a, b)
-	return yizzy.physics.G * a.mass * b.mass / a.pos.distance2(b.pos)
+yizzy.physics.gravityForce = function(a, b)
+	return -yizzy.physics.G * a.mass * b.mass / a.pos.distance2(b.pos)
 end
+
+yizzy.physics.Coulomb = 8.99 * 10 ^ 9
+
+yizzy.physics.electricForce = function(a, b)
+	return yizzy.physics.Coulomb * a.charge * b.charge / a.pos.distance2(b.pos)
+end
+-- F = kMm/R^2
 
 
 yizzy.physics.System = yizzy.core.class{
@@ -52,16 +59,23 @@ yizzy.physics.System = yizzy.core.class{
 		dtlimit = 0.5
 	},
 	
-	gravityFieldStrength = function(self, coord)
+	fieldStrength = function(self, coord, force)
+		force = force or 'gravity'
 		coord = V(coord)
 		local acc = V{0, 0}
 		for name, body in pairs(self.bodies) do
-			local distance = body.pos - coord
+			local distance = coord - body.pos
 			local distance2 = distance:value2()
 			if distance2 > 0.1 then
 				-- try not to divide by crazy amounts
-				local force = yizzy.physics.G * body.mass / distance2
-				acc = acc + (distance * force)
+				local factor
+				if force == 'gravity' then
+					factor = -yizzy.physics.G * body.mass
+				else
+					-- Field is defined for a charge of +1
+					factor = yizzy.physics.Coulomb * body.charge
+				end
+				acc = acc + distance * (factor / distance2)
 			end
 		end
 		return acc
@@ -72,7 +86,8 @@ yizzy.physics.System = yizzy.core.class{
 		dt = dt * self.timescale
 		
 		for i, body in pairs(self.bodies) do
-			body.acc = self:gravityFieldStrength(body.pos)
+			body.acc = self:fieldStrength(body.pos, 'gravity')
+			         + self:fieldStrength(body.pos, 'charge') * body.charge
 		end
 		
 		pcall(customforce)
