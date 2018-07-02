@@ -38,7 +38,7 @@ yizzy.render = yizzy.core.class{
 		
 		gridGray = 63,
 		-- all fields ('gravity')
-		fieldPrecision = 10,
+		fieldPrecision = 2,
 		
 		-- components
 		showPath = true,
@@ -76,17 +76,18 @@ yizzy.render = yizzy.core.class{
 		end
 	end,
 	
-	getField = function(self, force, precision)
+	getFieldStrength = function(self, force)
+        print('field day')
+        local pr = self.fieldPrecision
 		local width, height = love.graphics.getDimensions()
-		local square = V{precision, precision}
+		local square = V{pr, pr}
+		local grid = {precision=pr, force=force}
 		
-		local grid = {precision=precision, force=force}
-		
-		for x = 0, width / precision do
+		for x = 0, width / pr do
 			local line = {}
 			
-			for y = 0, height / precision do
-				local a = V{x, y} * precision
+			for y = 0, height / pr do
+				local a = V{x, y} * pr
 				local center = self:absCoord(a + square / 2)
 				
 				local intensity = self.system:fieldStrength(center, force):value()
@@ -113,7 +114,6 @@ yizzy.render = yizzy.core.class{
 			return
 		end
 		self:logPath()
-		self:logGravityField()
 	end,
 	
 	logPath = function(self)
@@ -122,10 +122,6 @@ yizzy.render = yizzy.core.class{
 			snap[name] = yizzy.core.copy(body.pos)
 		end
 		table.insert(self.paths, snap)
-	end,
-	
-	logGravityField = function(self)
-		self.field = self:getField(self.background, self.fieldPrecision)
 	end,
 	
 	------------
@@ -159,9 +155,9 @@ yizzy.render = yizzy.core.class{
 	end,
 
 	drawField = function(self)
-		local pr = self.field.precision
+		local pr = self.fieldPrecision
 		local square = V{pr, pr}
-		for x, line in ipairs(self.field) do
+		for x, line in ipairs(self.gravField) do
 			for y, intensity in ipairs(line) do
 				local b = V{x, y} * pr
 				local a = b - square
@@ -221,8 +217,8 @@ yizzy.render = yizzy.core.class{
 	end,
 	
 	-- todo: we're cleverer than this, do something fancy
-	--       like system:getGravityForce(body1, body2):Magnitude()
-	--       with vectors
+	--	   like system:getGravityForce(body1, body2):Magnitude()
+	--	   with vectors
 	drawConnection = function(self, pair)
 		-- oh man oh jeez coordinates suck
 		a = pair[1].pos

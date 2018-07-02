@@ -179,8 +179,8 @@ function love.keypressed(key)
 		showDebug = not showDebug
 	elseif key == 'space' then
 		system.playing = not system.playing
-	elseif key == 'f2' then
-		rend:logGravityField()
+    elseif key == 'f2' then
+        rend.gravField = rend:getFieldStrength('gravity')
 	elseif key == 'f5' then
 		love:load()
 	elseif key == 'f11' then
@@ -265,11 +265,9 @@ function love.mousemoved(x, y, dx, dy, istouch)
 		-- camera motion
 		rend.bodyCamera = nil
 		rend.camera = rend.camera - offset
-		rend:logGravityField()
 	
 	elseif love.mouse.isDown(3) then
 		rend.zoom = rend.zoom * 1.01 ^ dy
-		rend:logGravityField()
 	end
 end
 
@@ -279,6 +277,5 @@ function love.wheelmoved(x, y)
 		system.timescale = system.timescale * multiply
 	else
 		rend.zoom = rend.zoom * multiply
-		rend:logGravityField()
 	end
 end
