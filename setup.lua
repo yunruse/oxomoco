@@ -3,7 +3,7 @@ local yizzy = require 'yizzy'
 local solarBasic = {
 	recordPath = true,
 	
-	zoom = 1,
+	zoom = 3,
 	
 	background = 'grid',
 	fieldPrecision = 40,
@@ -27,14 +27,14 @@ local solarBasic = {
 				mass = 100, --7.342*10^22,
 				radius = 10, 
 				pos = {3000, 0}, --384402000
-				vel = {0, 82}
+				vel = {0, 84.5}
 			},
 			moon = {
 				color = {127, 127, 127},
 				mass = 3,
 				radius = 1,
 				pos = {3040, 0},
-				vel = {0, 107}
+				vel = {0, 110.8}
 			}
 		}
 	}
