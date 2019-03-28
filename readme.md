@@ -1,6 +1,6 @@
-# Yizzy
+# Oxomoco
 
-An old gravitational simulator made with [Löve]. Read my [blog post](https://yunru.se/347) about it for more info.
+A 2D gravitational simulator made with [Löve]. Read my [blog post](https://yunru.se/347) about it for more info.
 
 ![Animation of orbit. As the simulation speeds up it becomes less accurate.](https://yunru.se/wp-content/uploads/2018/07/yizzy-orbit-1.gif)
 
@@ -16,7 +16,7 @@ In addition to the tools available on 1, 2, 3 and 6, the following controls exis
 * F5: Restart
 * F11: Fullscreen
 * 9: Go into grid move
-* 8: Show gravitational field strength (press F2 to render
+* 8: Show gravitational field strength (press F2 to render - it's slow!)
 * D: Toggle debug display
 * T: Toggle body titles
 * P: Toggle paths
@@ -26,9 +26,7 @@ In addition to the tools available on 1, 2, 3 and 6, the following controls exis
 
 ### License
 
-This is an old work, so I put it into public domain.
-
-Copyright (c) Jack Dobson (yunru.se) 2018.
+Copyright (c) Mia yun Ruse (yunru.se) 2019.
 
 This work is licensed under a Creative Commons Zero license.
 To the extend possible under the law, the creator has waived all copyright
