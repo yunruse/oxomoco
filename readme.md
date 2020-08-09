@@ -1,8 +1,8 @@
 # Oxomoco
 
-A 2D gravitational simulator made with [Löve]. Read my [blog post](https://yunru.se/347) about it for more info.
+A 2D gravitational simulator made with [Löve]. Read my [blog post](https://yunru.se/blog/how-not-to-do-gravity) about it for more info.
 
-![Animation of orbit. As the simulation speeds up it becomes less accurate.](https://yunru.se/wp-content/uploads/2018/07/yizzy-orbit-1.gif)
+![Animation of orbit. As the simulation speeds up it becomes less accurate.](https://images.squarespace-cdn.com/content/v1/5dbf4ceb23861854274c5a15/1572846759769-VSOGURMFWC71X8Y91BND/ke17ZwdGBToddI8pDm48kHTltL2lmdnsJxFL_LED5_FZw-zPPgdn4jUwVcJE1ZvWEtT5uBSRWt4vQZAgTJucoTqqXjS3CfNDSuuf31e0tVGsg7I3aR9l36tvEixSmJtkpbMOeVpyzg_lzaMSRJTOf1tO8nJtk629tZGIWiyY3XQ/yizzy-orbit-perspectives.gif?format=1000w)
 
 ## Instructions
 
