@@ -5,15 +5,15 @@ When I was 17, I was taught, formally, the law of gravitation. So, of course, I 
 
 ![The Earth, as it appears to move about the Moon's reference frame. The simulation zooms out and shows the Sun, and simulation speeds up to show its more flower-like path](https://images.squarespace-cdn.com/content/v1/5dbf4ceb23861854274c5a15/1572846759769-VSOGURMFWC71X8Y91BND/ke17ZwdGBToddI8pDm48kHTltL2lmdnsJxFL_LED5_FZw-zPPgdn4jUwVcJE1ZvWEtT5uBSRWt4vQZAgTJucoTqqXjS3CfNDSuuf31e0tVGsg7I3aR9l36tvEixSmJtkpbMOeVpyzg_lzaMSRJTOf1tO8nJtk629tZGIWiyY3XQ/yizzy-orbit-perspectives.gif?format=1000w)
 
-It's **completely a toy project,** but as you can see, it has:
+It's **completely a toy project,** but it has:
 
 - reference frames, showing you different paths _in different reference frames!_
 - A renderer for the gravitational field strength, which is CPU-bound so a lil slow 
 - A neat grid system which fades in different grid sizes as you zoom (`Scrollwheel`)!
-- A simulation speed slider (`Shift+Scrollwheel`), which has no simulation speed limit so you can very quickly go into the Unphysical Realm and fling the Moon into the great beyond
-- The ability to move things around in real-time, or add random comets, and see how they, ah, destabilise things
+- A simulation speed slider (`Shift+Scrollwheel`), which has no simulation speed limit so you can very quickly go into the Unphysical Realm and fling the Moon into the great beyond!
+- The ability to move things around in real-time, or add random comets, and see how they, ah, destabilise things!
 
-I never got to include the Solar System with accurate orbits (because I was a _kid_), but I still think this is pretty neat considering I was 2017 and, like, barely sentient.
+I never got to include the Solar System with accurate orbits (because I was a _kid_), but I still think this is pretty neat considering I was 2017 and, like, barely sentient. Clearly so, because this thing runs its own object-oriented engine and physics.
 
 ## Instructions
 
