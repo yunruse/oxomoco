@@ -35,6 +35,8 @@ In addition to the tools available on 1, 2, 3 and 6, the following controls exis
 * `V`: Toggle velocity vector
 * `B`: Toggle body
 
+[Löve]: https://love2d.org
+
 ### License
 
 <p xmlns:dct="http://purl.org/dc/terms/" xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
