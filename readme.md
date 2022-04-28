@@ -10,15 +10,14 @@ It's **completely a toy project,** but as you can see, it has:
 - reference frames, showing you different paths _in different reference frames!_
 - A renderer for the gravitational field strength, which is CPU-bound so a lil slow 
 - A neat grid system which fades in different grid sizes as you zoom (`Scrollwheel`)!
-- A simulation speed slider (`Shift+Scrollwheel`), which has no simulation limits
+- A simulation speed slider (`Shift+Scrollwheel`), which has no simulation speed limit so you can very quickly go into the Unphysical Realm and fling the Moon into the great beyond
+- The ability to move things around in real-time, or add random comets, and see how they, ah, destabilise things
 
 I never got to include the Solar System with accurate orbits (because I was a _kid_), but I still think this is pretty neat considering I was 2017 and, like, barely sentient.
 
-
-
 ## Instructions
 
-Download [Löve], extract this to a folder of your choice, edit `yizzy.bat` to your install path, and play away.
+Download [Löve], extract this to a folder of your choice, and run `love path/to/oxomoco`. You might need an older version to run without bugs, sorry.
 
 In addition to the tools available on 1, 2, 3 and 6, the following controls exist:
 
